@@ -8,7 +8,7 @@
 
 **Tech Stack:** Go 1.26, Temporal Go SDK workflow APIs, generated `go.temporal.io/api` WorkflowService Nexus reference, Temporal feature harness, embedded Temporal dev server, JSON feature configuration.
 
-**Spec:** `features/system_nexus/README.md`; server implementation in `/Users/timli/Desktop/temporal/chasm/lib/workflow/nexus_service.go`; server integration coverage in `/Users/timli/Desktop/temporal/tests/signal_with_start_from_workflow_test.go`.
+**Spec:** `features/system_nexus/signal_with_start/README.md`; server implementation in `/Users/timli/Desktop/temporal/chasm/lib/workflow/nexus_service.go`; server integration coverage in `/Users/timli/Desktop/temporal/tests/signal_with_start_from_workflow_test.go`.
 
 ## Global Constraints
 

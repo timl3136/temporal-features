@@ -22,5 +22,8 @@ support targeting a different namespace.
   scheduled directly to completed without a started event.
 
 The feature uses an embedded dev-server run variant to enable
-`history.enableSignalWithStartFromWorkflow`. SDKs that do not expose the
-reserved System Nexus endpoint skip the feature.
+`history.enableSignalWithStartFromWorkflow`. With the pinned Go SDK v1.49.0,
+the public workflow Nexus client rejects the reserved `__temporal_` endpoint
+prefix; the feature converts that known capability failure into a skip. The
+feature is a dormant scaffold until a public SDK release exposes the reserved
+System Nexus endpoint.
