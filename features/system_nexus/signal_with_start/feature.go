@@ -49,8 +49,17 @@ func CallerWorkflow(
 	firstRequest *workflowservice.SignalWithStartWorkflowExecutionRequest,
 	secondRequest *workflowservice.SignalWithStartWorkflowExecutionRequest,
 ) (CallerResult, error) {
+	return callerWorkflow(ctx, systemEndpoint, firstRequest, secondRequest)
+}
+
+func callerWorkflow(
+	ctx workflow.Context,
+	endpoint string,
+	firstRequest *workflowservice.SignalWithStartWorkflowExecutionRequest,
+	secondRequest *workflowservice.SignalWithStartWorkflowExecutionRequest,
+) (CallerResult, error) {
 	nexusClient := workflow.NewNexusClient(
-		systemEndpoint,
+		endpoint,
 		workflowservicenexus.TemporalAPIWorkflowserviceV1WorkflowService.ServiceName,
 	)
 	options := workflow.NexusOperationOptions{ScheduleToCloseTimeout: time.Minute}
@@ -58,7 +67,7 @@ func CallerWorkflow(
 	var first workflowservice.SignalWithStartWorkflowExecutionResponse
 	if err := nexusClient.ExecuteOperation(
 		ctx,
-		workflowservicenexus.TemporalAPIWorkflowserviceV1WorkflowService.SignalWithStartWorkflowExecution,
+		workflowservicenexus.TemporalAPIWorkflowserviceV1WorkflowService.SignalWithStartWorkflowExecution.Name(),
 		firstRequest,
 		options,
 	).Get(ctx, &first); err != nil {
@@ -74,7 +83,7 @@ func CallerWorkflow(
 	var second workflowservice.SignalWithStartWorkflowExecutionResponse
 	if err := nexusClient.ExecuteOperation(
 		ctx,
-		workflowservicenexus.TemporalAPIWorkflowserviceV1WorkflowService.SignalWithStartWorkflowExecution,
+		workflowservicenexus.TemporalAPIWorkflowserviceV1WorkflowService.SignalWithStartWorkflowExecution.Name(),
 		secondRequest,
 		options,
 	).Get(ctx, &second); err != nil {
