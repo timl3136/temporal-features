@@ -128,12 +128,13 @@ func newRequest(
 	signalInput *commonpb.Payloads,
 ) *workflowservice.SignalWithStartWorkflowExecutionRequest {
 	return &workflowservice.SignalWithStartWorkflowExecutionRequest{
-		WorkflowId:   workflowID,
-		WorkflowType: &commonpb.WorkflowType{Name: targetWorkflowName},
-		TaskQueue:    &taskqueuepb.TaskQueue{Name: taskQueue},
-		Input:        workflowInput,
-		SignalName:   signalName,
-		SignalInput:  signalInput,
+		WorkflowId:               workflowID,
+		WorkflowType:             &commonpb.WorkflowType{Name: targetWorkflowName},
+		TaskQueue:                &taskqueuepb.TaskQueue{Name: taskQueue},
+		Input:                    workflowInput,
+		SignalName:               signalName,
+		SignalInput:              signalInput,
+		WorkflowIdConflictPolicy: enumspb.WORKFLOW_ID_CONFLICT_POLICY_USE_EXISTING,
 	}
 }
 
