@@ -28,6 +28,13 @@ caller's namespace only.
 | Python | `workflow.signal_with_start_workflow` | >= 1.29.0 | Both calls return the same target run ID; the target returns `started: start-value`, `signal: signal-one`, `signal: signal-two` in order, proving the second start input was ignored. |
 | TypeScript | `signalWithStartWorkflow` from `@temporalio/workflow` | Unreleased (`sdk-typescript#2396`, after 1.24.0) | Both calls return the same target run ID; the target returns `started: start-value`, `signal: signal-one`, `signal: signal-two` in order, proving the second start input was ignored. |
 | .NET | `Workflow.SignalWithStartWorkflowAsync` | >= 1.17.0 | Both calls return the same target run ID; the target returns `started: start-value`, `signal: signal-one`, `signal: signal-two` in order, proving the second start input was ignored. |
+| Go | generated `workflowservicenexus` operation via `workflow.NewNexusClient` | Not yet supported (skips; see below) | First response `Started=true` and both responses share their `RunId`; target returns `started: start-value`, `signal: signal-one`, `signal: signal-two` in order; caller history has 2 `NexusOperationScheduled` and 2 `NexusOperationCompleted` (0 `NexusOperationStarted`, i.e. synchronous); target history begins `WorkflowExecutionStarted` then `WorkflowExecutionSignaled`, with 2 `WorkflowExecutionSignaled` total. |
+
+Go SDK v1.49.0's `workflow.NewNexusClient` rejects the reserved endpoint, so the
+Go feature reports a harness skip.
+[sdk-go#2416](https://github.com/temporalio/sdk-go/pull/2416) keeps that
+restriction and adds `workflow.SignalWithStartWorkflow`; once released, the Go
+feature should move to that API and keep its history assertions.
 
 ## Scope boundary
 
