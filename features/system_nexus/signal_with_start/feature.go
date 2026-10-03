@@ -15,6 +15,7 @@ import (
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/converter"
 	"go.temporal.io/sdk/workflow"
+	"google.golang.org/protobuf/types/known/durationpb"
 )
 
 const (
@@ -163,6 +164,7 @@ var Feature = harness.Feature{
 
 		targetWorkflowID := "system-nexus-signal-with-start-" + runner.TaskQueue
 		firstRequest := newRequest(targetWorkflowID, runner.TaskQueue, workflowInput, firstSignalInput)
+		firstRequest.WorkflowExecutionTimeout = durationpb.New(time.Minute)
 		secondRequest := newRequest(targetWorkflowID, runner.TaskQueue, unusedWorkflowInput, secondSignalInput)
 
 		return runner.Client.ExecuteWorkflow(ctx, client.StartWorkflowOptions{
